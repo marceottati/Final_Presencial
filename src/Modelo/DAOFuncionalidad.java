@@ -11,21 +11,19 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 import Inicio.Conexion;
+import Modelo.Funcionalidad;
 
 /**
  *
  * @author tecnico
  */
-public class DAOFuncionalidad extends Funcionalidad {
+public class DAOFuncionalidad {
 	private static final String ALL_FUNCIONALIDADES = "SELECT * FROM FUNCIONALIDADES ORDER BY ID_FUNCIONALIDAD";
-
 	private static final String INSERT_FUNCIONALIDAD = "INSERT INTO FUNCIONALIDADES (DESCRIPCION, NOMBRE) VALUES (?,?)";
-
 	private static final String UPDATE_FUNCIONALIDAD = "UPDATE FUNCIONALIDADES SET DESCRIPCION=?, NOMBRE=?  WHERE ID_FUNCIONALIDAD=?";
-
 	private static final String DELETE_FUNCIONALIDAD = "DELETE FROM FUNCIONALIDADES WHERE ID_FUNCIONALIDAD=?";
-
 	private static final String SELECCIONAR_BY_ID_FUNCIONALIDAD = "SELECT * FROM ROLES WHERE ID_FUNCIONALIDAD=?";
+	private static final String ROL_FUNCIONALIDADES = "SELECT f.* FROM Funcionalidades f LEFT JOIN ROLES_FUNCIONALIDADES RF ON f.id = RF.id_funcion WHERE RF.id_rol=?";
 
 	/**
 	 * FUNCION findFuncionalidades RETORNA UN OBJETO FUNCIONALIDAD DADO SU ID
@@ -63,7 +61,7 @@ public class DAOFuncionalidad extends Funcionalidad {
 	 * @param f
 	 * @return boolean
 	 */
-	public static boolean insertFuncionalidad(Funcionalidad f) {
+	public boolean insertFuncionalidad(Funcionalidad f) {
 		try {
 			boolean resultado = false;
 			PreparedStatement st = Conexion.getConnection().prepareStatement(INSERT_FUNCIONALIDAD);
@@ -93,7 +91,7 @@ public class DAOFuncionalidad extends Funcionalidad {
 	 * @param f
 	 * @return BOOLEAN
 	 */
-	public static boolean updateRol(Funcionalidad f) {
+	public boolean updateFuncionalidad(Funcionalidad f) {
 		try {
 			boolean resultado = false;
 			PreparedStatement st = Conexion.getConnection().prepareStatement(UPDATE_FUNCIONALIDAD);
@@ -104,13 +102,7 @@ public class DAOFuncionalidad extends Funcionalidad {
 
 			int ret = st.executeUpdate();
 
-			if (ret > 0) {
-				resultado = true;
-			} else {
-				resultado = false;
-			}
-
-			return resultado;
+			return (ret > 0);
 
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -167,7 +159,28 @@ public class DAOFuncionalidad extends Funcionalidad {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
+	public static LinkedList<Funcionalidad> rol_Func(int id) {
+		LinkedList<Funcionalidad> Funcionalidades = new LinkedList<>();
+
+		try {
+
+			PreparedStatement st = Conexion.getConnection().prepareStatement(ROL_FUNCIONALIDADES);
+			st.setInt(1, id);
+			ResultSet resultado = st.executeQuery();
+
+			while (resultado.next()) {
+				Funcionalidad f = new Funcionalidad();
+				f.setId(resultado.getInt("ID"));
+				f.setDescripcion(resultado.getString("DESCRIPCION"));
+				f.setNombre(resultado.getString("NOMBRE"));
+				Funcionalidades.add(f);
+			}
+			return Funcionalidades;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
