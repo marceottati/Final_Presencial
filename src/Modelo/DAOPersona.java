@@ -1,3 +1,12 @@
+<<<<<<< Updated upstream
+=======
+/*
+  
+ÚLTIMAS MODIFICACIONES -----------
+20200825 > Landro > modificación > login, insert, update
+VAMO LO PIBE
+*/
+>>>>>>> Stashed changes
 
 package Modelo;
 
@@ -49,7 +58,11 @@ public class DAOPersona {
 			return false;
 		}
 	}
+<<<<<<< Updated upstream
 //**********************************MÉTODO PARA ACTAULIZAR REGISTROS EN LA TABLA PERSONAS**********************************************************************
+=======
+
+>>>>>>> Stashed changes
 	/**
 	 * UPDATE
 	 * @param PERSONA

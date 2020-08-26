@@ -16,6 +16,7 @@ import Vista.VisRol;
 
 public class ContRol implements ActionListener {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -167,6 +168,8 @@ public class ContRol implements ActionListener {
 //	 * this.vista.cbFuncionalidad.addItem(f.getNombre()); } } }
 //	 */
 =======
+=======
+>>>>>>> Stashed changes
 	private VisRol vista;
 	private Rol rol;
 
@@ -305,5 +308,8 @@ public class ContRol implements ActionListener {
 		}
 	}
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }
