@@ -16,7 +16,7 @@ import Inicio.Conexion;
  *
  * @author tecnico
  */
-public class DAOFuncionalidad {
+public class DAOFuncionalidad extends Funcionalidad {
 	private static final String ALL_FUNCIONALIDADES = "SELECT * FROM FUNCIONALIDADES ORDER BY ID_FUNCIONALIDAD";
 
 	private static final String INSERT_FUNCIONALIDAD = "INSERT INTO FUNCIONALIDADES (DESCRIPCION, NOMBRE) VALUES (?,?)";
@@ -63,7 +63,7 @@ public class DAOFuncionalidad {
 	 * @param f
 	 * @return boolean
 	 */
-	public boolean insertFuncionalidad(Funcionalidad f) {
+	public static boolean insertFuncionalidad(Funcionalidad f) {
 		try {
 			boolean resultado = false;
 			PreparedStatement st = Conexion.getConnection().prepareStatement(INSERT_FUNCIONALIDAD);
@@ -93,7 +93,7 @@ public class DAOFuncionalidad {
 	 * @param f
 	 * @return BOOLEAN
 	 */
-	public boolean updateRol(Funcionalidad f) {
+	public static boolean updateRol(Funcionalidad f) {
 		try {
 			boolean resultado = false;
 			PreparedStatement st = Conexion.getConnection().prepareStatement(UPDATE_FUNCIONALIDAD);

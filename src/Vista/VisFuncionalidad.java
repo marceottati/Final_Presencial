@@ -95,4 +95,9 @@ public class VisFuncionalidad {
 		tabbedPane.setBounds(224, 23, 237, 308);
 		frmControlDeFuncionalidades.getContentPane().add(tabbedPane);
 	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

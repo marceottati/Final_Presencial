@@ -2,7 +2,7 @@
   
 ÚLTIMAS MODIFICACIONES -----------
 20200825 > Landro > modificación > login, insert, update
-
+VAMO LO PIBE
 */
 
 package Modelo;
