@@ -7,11 +7,14 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.xml.crypto.Data;
 
@@ -23,12 +26,13 @@ import Modelo.Persona;
 import Modelo.Rol;
 import Vista.VisPersona;
 
-public class ContVistaPersona<Date> implements ActionListener {
+public class ContPersona<Date> implements ActionListener {
 	private VisPersona vispersona;
 	private Persona persona;
 	private DAOPersona dp;
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-	public ContVistaPersona(VisPersona vispersona) {
+	public ContPersona(VisPersona vispersona) {
 
 		super();
 		this.persona = new Persona();
@@ -58,16 +62,18 @@ public class ContVistaPersona<Date> implements ActionListener {
 		cargarComboRoles();
 	}
 
-
 	/**
 	 * 
 	 */
 	public void cargarComboRoles() {
-		LinkedList<Rol> roles = DAORol.findAll();
-		for (Rol rol : roles) {
-			this.vispersona.comboRol.addItem(rol);
+		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+		LinkedList<Rol> lista = new LinkedList<Rol>();
+		lista = DAORol.findAll();
+
+		for (Object rol : lista) {
+			modelo.addElement(rol);
 		}
-		
+		vispersona.comboRol.setModel(modelo);
 	}
 
 	/**
@@ -76,10 +82,11 @@ public class ContVistaPersona<Date> implements ActionListener {
 	public void delete() {
 		String documento = this.vispersona.textDocumento.getText();
 		if (this.controlVacio(documento)) {
-			 Auxiliar.avisar("El campo documento no puede estar vacío", "info");
+			Auxiliar.avisar("El campo documento no puede estar vacío", "info");
 			return;
 		}
-		int sino = JOptionPane.showConfirmDialog(null, "Seguro que quiere eliminar este registro?", "Confirmar", JOptionPane.YES_NO_OPTION);
+		int sino = JOptionPane.showConfirmDialog(null, "Seguro que quiere eliminar este registro?", "Confirmar",
+				JOptionPane.YES_NO_OPTION);
 		if (sino == JOptionPane.YES_OPTION) {
 			this.persona = new Persona();
 			this.persona.setDocumento(documento);
@@ -101,13 +108,7 @@ public class ContVistaPersona<Date> implements ActionListener {
 		String apellido2 = this.vispersona.textApellido2.getText();
 		String nombre1 = this.vispersona.textNombre1.getText();
 		String nombre2 = this.vispersona.textNombre2.getText();
-		java.sql.Date fn = null;
-		try {
-			fn = (java.sql.Date) new SimpleDateFormat("dd/MM/yyyy").parse(this.vispersona.textFN.getText());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		LocalDate fn = LocalDate.parse(this.vispersona.textFN.getText(), this.formatter);
 		String clave = this.vispersona.textClave.getText();
 		Rol rol = (Rol) this.vispersona.comboRol.getSelectedItem();
 		String email = this.vispersona.textEmail.getText();
@@ -136,13 +137,7 @@ public class ContVistaPersona<Date> implements ActionListener {
 		String apellido2 = this.vispersona.textApellido2.getText();
 		String nombre1 = this.vispersona.textNombre1.getText();
 		String nombre2 = this.vispersona.textNombre2.getText();
-		java.sql.Date fn = null;
-		try {
-			fn = (java.sql.Date) new SimpleDateFormat("dd/MM/yyyy").parse(this.vispersona.textFN.getText());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		LocalDate fn = LocalDate.parse(this.vispersona.textFN.getText(), this.formatter);
 		String clave = this.vispersona.textClave.getText();
 		String email = this.vispersona.textEmail.getText();
 		Rol rol = (Rol) this.vispersona.comboRol.getSelectedItem();

@@ -2,7 +2,7 @@ package Modelo;
 
 import Inicio.Conexion;
 import java.sql.Connection;
-import java.sql.Date;
+import java.time.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ public class Persona {
     private String apellido2;
     private String nombre1;
     private String nombre2;
-    private Date fechaNac;
+    private LocalDate fechaNac;
     private String pass;
     private String email;
     private Rol rol;
@@ -24,7 +24,7 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(String documento, String apellido1, String apellido2, String nombre1, String nombre2, Date fechaNac,
+    public Persona(String documento, String apellido1, String apellido2, String nombre1, String nombre2, LocalDate fechaNac,
             String pass, String email, Rol rol) {
 
         this.documento = documento;
@@ -86,11 +86,11 @@ public class Persona {
         this.nombre2 = nombre2;
     }
 
-    public Date getFechaNac() {
+    public LocalDate getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(Date fechaNac) {
+    public void setFechaNac(LocalDate fechaNac) {
         this.fechaNac = fechaNac;
     }
 

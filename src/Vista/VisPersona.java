@@ -35,9 +35,8 @@ public class VisPersona extends JFrame{
 	 * Create the application.
 	 */
 	public VisPersona() {
-		VisPersona window = new VisPersona();
 		initialize();
-		window.frmMantenimientoDePersona.setVisible(true);
+		this.frmMantenimientoDePersona.setVisible(true);
 	}
 
 	/**
@@ -51,42 +50,42 @@ public class VisPersona extends JFrame{
 		frmMantenimientoDePersona.getContentPane().setLayout(null);
 
 		textDocumento = new JTextField();
-		textDocumento.setBounds(85, 45, 134, 20);
+		textDocumento.setBounds(112, 45, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(textDocumento);
 		textDocumento.setColumns(10);
 
 		textNombre1 = new JTextField();
-		textNombre1.setBounds(85, 76, 134, 20);
+		textNombre1.setBounds(112, 76, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(textNombre1);
 		textNombre1.setColumns(10);
 
 		textNombre2 = new JTextField();
-		textNombre2.setBounds(85, 107, 134, 20);
+		textNombre2.setBounds(112, 107, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(textNombre2);
 		textNombre2.setColumns(10);
 
 		textApellido1 = new JTextField();
-		textApellido1.setBounds(85, 140, 134, 20);
+		textApellido1.setBounds(112, 140, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(textApellido1);
 		textApellido1.setColumns(10);
 
 		textApellido2 = new JTextField();
-		textApellido2.setBounds(85, 175, 134, 20);
+		textApellido2.setBounds(112, 175, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(textApellido2);
 		textApellido2.setColumns(10);
 
 		textFN = new JTextField();
-		textFN.setBounds(85, 206, 134, 20);
+		textFN.setBounds(112, 206, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(textFN);
 		textFN.setColumns(10);
 
 		textClave = new JTextField();
-		textClave.setBounds(85, 237, 134, 20);
+		textClave.setBounds(112, 237, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(textClave);
 		textClave.setColumns(10);
 
 		textEmail = new JTextField();
-		textEmail.setBounds(85, 268, 134, 20);
+		textEmail.setBounds(112, 268, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(textEmail);
 		textEmail.setColumns(10);
 
@@ -95,43 +94,52 @@ public class VisPersona extends JFrame{
 		frmMantenimientoDePersona.getContentPane().add(tabbedPane);
 
 		JLabel documento = new JLabel("Documento");
-		documento.setBounds(17, 45, 58, 14);
+		documento.setHorizontalAlignment(SwingConstants.RIGHT);
+		documento.setBounds(17, 45, 85, 14);
 		frmMantenimientoDePersona.getContentPane().add(documento);
 
 		JLabel nombre1 = new JLabel("Nombre 1");
-		nombre1.setBounds(29, 76, 46, 14);
+		nombre1.setHorizontalAlignment(SwingConstants.RIGHT);
+		nombre1.setBounds(29, 76, 73, 14);
 		frmMantenimientoDePersona.getContentPane().add(nombre1);
 
 		JLabel nombre2 = new JLabel("Nombre 2");
-		nombre2.setBounds(29, 107, 46, 14);
+		nombre2.setHorizontalAlignment(SwingConstants.RIGHT);
+		nombre2.setBounds(29, 107, 73, 14);
 		frmMantenimientoDePersona.getContentPane().add(nombre2);
 
 		JLabel apellido1 = new JLabel("Apellido 1");
-		apellido1.setBounds(29, 140, 46, 14);
+		apellido1.setHorizontalAlignment(SwingConstants.RIGHT);
+		apellido1.setBounds(29, 140, 73, 14);
 		frmMantenimientoDePersona.getContentPane().add(apellido1);
 
 		JLabel apellido2 = new JLabel("Apellido 2");
-		apellido2.setBounds(29, 175, 46, 14);
+		apellido2.setHorizontalAlignment(SwingConstants.RIGHT);
+		apellido2.setBounds(29, 175, 73, 14);
 		frmMantenimientoDePersona.getContentPane().add(apellido2);
 
 		JLabel fNacimiento = new JLabel("F. Nacimiento");
-		fNacimiento.setBounds(10, 206, 65, 14);
+		fNacimiento.setHorizontalAlignment(SwingConstants.RIGHT);
+		fNacimiento.setBounds(10, 206, 92, 14);
 		frmMantenimientoDePersona.getContentPane().add(fNacimiento);
 
 		JLabel clave = new JLabel("Clave");
-		clave.setBounds(48, 237, 27, 14);
+		clave.setHorizontalAlignment(SwingConstants.RIGHT);
+		clave.setBounds(48, 237, 54, 14);
 		frmMantenimientoDePersona.getContentPane().add(clave);
 
 		JLabel email = new JLabel("Email");
-		email.setBounds(48, 268, 27, 14);
+		email.setHorizontalAlignment(SwingConstants.RIGHT);
+		email.setBounds(48, 268, 54, 14);
 		frmMantenimientoDePersona.getContentPane().add(email);
 
 		JLabel rol = new JLabel("Rol");
-		rol.setBounds(60, 327, 15, 14);
+		rol.setHorizontalAlignment(SwingConstants.RIGHT);
+		rol.setBounds(60, 327, 42, 14);
 		frmMantenimientoDePersona.getContentPane().add(rol);
 
 		comboRol = new JComboBox();
-		comboRol.setBounds(85, 324, 134, 20);
+		comboRol.setBounds(112, 324, 134, 20);
 		frmMantenimientoDePersona.getContentPane().add(comboRol);
 
 		btnGuardar = new JButton("Guardar");

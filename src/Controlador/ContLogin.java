@@ -39,7 +39,7 @@ public class ContLogin implements ActionListener {
 		if (obj == this.vistaLogin.btnLogin) {
 			String email = vistaLogin.txtEmail.getText();
 			String pass = vistaLogin.txtPass.getText();
-			Auxiliar.avisar(email, "info");
+
 			if (email.equals("") || pass.equals("")) {
 				Auxiliar.avisar("Los campos email y contraseña son obligatorios", "error");
 				return;
@@ -51,7 +51,9 @@ public class ContLogin implements ActionListener {
 				Auxiliar.avisar("No se encontró usuario", "info");
 				return;
 			}
-			VisMenu vm = new VisMenu(this.persona);
+			VisMenu vm = new VisMenu();
+			ContMenu cvm = new ContMenu(vm, this.persona);
+			cvm.mostrar();
 		}
 	}
 

@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 import Inicio.Auxiliar;
 import Modelo.DAOPersona;
@@ -24,7 +27,27 @@ public class ContFuncionalidad implements ActionListener {
 	public ContFuncionalidad(VisFuncionalidad vista) {
 		super();
 		this.funcionalidad = new Funcionalidad();
-		this.visFuncionalidad = visFuncionalidad;
+		this.visFuncionalidad = vista;
+		
+//		DefaultTableModel modelo = new DefaultTableModel();
+//		final String[] columnNames = { "Id", "Nombre", "Descripción" };
+//		for (int column = 0; column < columnNames.length; column++) {
+//			modelo.addColumn(columnNames[column]);
+//		}
+//		Object[] fila = new Object[columnNames.length];
+//		LinkedList<Funcionalidad> funs = DAOFuncionalidad.findAll(); 
+//		for (int i = 0; i < funs.size(); i++) {
+//			int id = funs.get(i).getId();
+//			String nombre = funs.get(i).getNombre();
+//			String descripcion = funs.get(i).getDescripcion();
+//			fila[0] = id;
+//			fila[1] = nombre;
+//			fila[2] = descripcion;
+//			modelo.addRow(fila);
+//		}
+//		this.visFuncionalidad.table.setModel(modelo);
+////		JScrollPane scrollPane = new JScrollPane(this.visFuncionalidad.table);
+		
 		this.visFuncionalidad.btnEliminar.addActionListener(this);
 		this.visFuncionalidad.btnModificar.addActionListener(this);
 		this.visFuncionalidad.btnGuardar.addActionListener(this);
@@ -43,7 +66,7 @@ public class ContFuncionalidad implements ActionListener {
 	}
 
 	public void iniciar() {
-		this.visFuncionalidad.setVisible(true);
+//		this.visFuncionalidad.setVisible(true);
 
 	}
 
@@ -68,20 +91,24 @@ public class ContFuncionalidad implements ActionListener {
 	}
 
 	public void update() {
+		String id = this.visFuncionalidad.textId.getText();
 		String nombre = this.visFuncionalidad.textNombre.getText();
 		String descripcion = this.visFuncionalidad.textDescripcion.getText();
 
-		if (this.controlVacio(nombre) || this.controlVacio(descripcion)) {
+		if (this.controlVacio(id) || this.controlVacio(nombre) || this.controlVacio(descripcion)) {
 			Auxiliar.avisar("Los campos no pueden estar vacíos", "info");
 			return;
 		}
-		this.DAOFuncionalidad = new Funcionalidad(descripcion, nombre);
-		if (DAOFuncionalidad.updateRol(this.funcionalidad)) {
+
+		int idx = Integer.parseInt(id);
+		this.funcionalidad.setId(idx);
+		this.funcionalidad.setNombre(nombre);
+		this.funcionalidad.setDescripcion(descripcion);
+		if (DAOFuncionalidad.updateFuncionalidad(this.funcionalidad)) {
 			this.clean();
-			JOptionPane.showMessageDialog(null, "Exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+			Auxiliar.avisar("Se actaulizó la funcionalidad", "info");
 		} else {
-			JOptionPane.showMessageDialog(null, "No se pudo modificar el registro", "Error",
-					JOptionPane.INFORMATION_MESSAGE);
+			Auxiliar.avisar("No se actaulizó la funcionalidad", "error");
 		}
 	}
 
@@ -99,10 +126,9 @@ public class ContFuncionalidad implements ActionListener {
 		this.funcionalidad = new Funcionalidad(descripcion, nombre);
 		if (DAOFuncionalidad.insertFuncionalidad(this.funcionalidad)) {
 			this.clean();
-			JOptionPane.showMessageDialog(null, "Exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+			Auxiliar.avisar("Se creó la funcionalidad", "info");
 		} else {
-			JOptionPane.showMessageDialog(null, "No se pudo crear el registro", "Error",
-					JOptionPane.INFORMATION_MESSAGE);
+			Auxiliar.avisar("No se pudo craer la funcionalidad", "error");
 		}
 
 	}

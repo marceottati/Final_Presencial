@@ -10,7 +10,8 @@ package Modelo;
  * @author tecnico
  */
 public class Rol {
-    private int id;
+
+	private int id;
     private String nombre;
     private String descripcion;
 
@@ -64,6 +65,10 @@ public class Rol {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
+    @Override
+	public String toString() {
+		return nombre;
+	}    
     
 }

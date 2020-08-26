@@ -18,16 +18,12 @@ import Inicio.Conexion;
  */
 public class DAOFuncionalidad {
 	private static final String ALL_FUNCIONALIDADES = "SELECT * FROM FUNCIONALIDADES ORDER BY ID";
-
 	private static final String INSERT_FUNCIONALIDAD = "INSERT INTO FUNCIONALIDADES (DESCRIPCION, NOMBRE) VALUES (?,?)";
+	private static final String UPDATE_FUNCIONALIDAD = "UPDATE FUNCIONALIDADES SET DESCRIPCION=?, NOMBRE=? WHERE ID=?";
+	private static final String DELETE_FUNCIONALIDAD = "DELETE FROM FUNCIONALIDADES WHERE ID=?";
+	private static final String SELECCIONAR_BY_ID_FUNCIONALIDAD = "SELECT * FROM ROLES WHERE ID=?";
 
-	private static final String UPDATE_FUNCIONALIDAD = "UPDATE FUNCIONALIDADES SET DESCRIPCION=?, NOMBRE=?  WHERE ID_FUNCIONALIDAD=?";
-
-	private static final String DELETE_FUNCIONALIDAD = "DELETE FROM FUNCIONALIDADES WHERE ID_FUNCIONALIDAD=?";
-
-	private static final String SELECCIONAR_BY_ID_FUNCIONALIDAD = "SELECT * FROM ROLES WHERE ID_FUNCIONALIDAD=?";
-
-	private static final String ROL_FUNCIONALIDADES = "SELECT f.* FROM Funcionalidades f LEFT JOIN ROLES_FUNCIONALIDADES RF ON f.id = RF.FUNCIONALIDAD_ID WHERE RF.ROL_ID=?";
+	private static final String ROL_FUNCIONALIDADES = "SELECT f.* FROM Funcionalidades f LEFT JOIN ROLES_FUNCIONALIDADES RF ON f.ID = RF.FUNCIONALIDAD_ID WHERE RF.ROL_ID=?";
 	
 	//SENTENCIAS DE LA TABLA N N
 	private static final String DELETE_ROL_FUNC = "DELETE FROM ROLES_FUNCIONALIDADES WHERE ROL_ID=? AND FUNCIONALIDAD_ID=?";
@@ -40,7 +36,7 @@ public class DAOFuncionalidad {
 	 * @param id
 	 * @return FUNCIONALIDAD
 	 */
-	public Funcionalidad findFuncionalidades(int id) {
+	public static Funcionalidad findFuncionalidades(int id) {
 
 		try {
 			Funcionalidad f = new Funcionalidad();
@@ -70,7 +66,7 @@ public class DAOFuncionalidad {
 	 * @param f
 	 * @return boolean
 	 */
-	public boolean insertFuncionalidad(Funcionalidad f) {
+	public static boolean insertFuncionalidad(Funcionalidad f) {
 		try {
 			boolean resultado = false;
 			PreparedStatement st = Conexion.getConnection().prepareStatement(INSERT_FUNCIONALIDAD);
@@ -100,7 +96,7 @@ public class DAOFuncionalidad {
 	 * @param f
 	 * @return BOOLEAN
 	 */
-	public boolean updateFuncionalidad(Funcionalidad f) {
+	public static boolean updateFuncionalidad(Funcionalidad f) {
 		try {
 			PreparedStatement st = Conexion.getConnection().prepareStatement(UPDATE_FUNCIONALIDAD);
 
@@ -125,15 +121,15 @@ public class DAOFuncionalidad {
 	 * @return BOOLEAN
 	 */
 
-	public static boolean delete(int id) {
+	public static boolean delete(Funcionalidad f) {
 		try {
 
 			PreparedStatement st = Conexion.getConnection().prepareStatement(DELETE_FUNCIONALIDAD);
 
-			st.setInt(1, id);
+			st.setInt(1, f.getId());
 			int retorno = st.executeUpdate();
 
-			return retorno > 0;
+			return (retorno > 0);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,14 +165,18 @@ public class DAOFuncionalidad {
 		}
 	}
 
-		
-	public static LinkedList<Funcionalidad> rol_Func(int id) {
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static LinkedList<Funcionalidad> rol_Func(Rol rol) {
 		LinkedList<Funcionalidad> Funcionalidades = new LinkedList<>();
 
 		try {
 
 			PreparedStatement st = Conexion.getConnection().prepareStatement(ROL_FUNCIONALIDADES);
-			st.setInt(1, id);
+			st.setInt(1, rol.getId());
 			ResultSet resultado = st.executeQuery();
 			System.out.println("cos");
 			while (resultado.next()) {

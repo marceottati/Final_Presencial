@@ -38,15 +38,14 @@ public class DAOPersona {
 			PreparedStatement st = Conexion.getConnection().prepareStatement(INSERT_PERSONAS);
 
 			st.setString(1, p.getDocumento());
-			st.setString(1, p.getApellido1());
-			st.setString(1, p.getApellido2());
-			st.setString(1, p.getNombre1());
-			st.setString(1, p.getNombre2());
-			st.setDate(1, p.getFechaNac());
-			st.setString(1, p.getPass());
-			st.setInt(1, p.getRol().getId());
-			st.setString(1, p.getEmail());
-			st.setString(1, p.getDocumento());
+			st.setString(2, p.getApellido1());
+			st.setString(3, p.getApellido2());
+			st.setString(4, p.getNombre1());
+			st.setString(5, p.getNombre2());
+			st.setDate(6, java.sql.Date.valueOf(p.getFechaNac()));
+			st.setString(7, p.getPass());
+			st.setInt(8, p.getRol().getId());
+			st.setString(9, p.getEmail());
 
 			int nro = st.executeUpdate();
 
@@ -68,15 +67,15 @@ public class DAOPersona {
 			PreparedStatement st = Conexion.getConnection().prepareStatement(UPDATE_PERSONAS);
 
 			st.setString(1, p.getDocumento());
-			st.setString(1, p.getApellido1());
-			st.setString(1, p.getApellido2());
-			st.setString(1, p.getNombre1());
-			st.setString(1, p.getNombre2());
-			st.setDate(1, p.getFechaNac());
-			st.setString(1, p.getPass());
-			st.setInt(1, p.getRol().getId());
-			st.setString(1, p.getEmail());
-			st.setInt(1, p.getId());
+			st.setString(2, p.getApellido1());
+			st.setString(3, p.getApellido2());
+			st.setString(4, p.getNombre1());
+			st.setString(5, p.getNombre2());
+			st.setDate(6, java.sql.Date.valueOf(p.getFechaNac()));
+			st.setString(7, p.getPass());
+			st.setInt(8, p.getRol().getId());
+			st.setString(9, p.getEmail());
+			st.setInt(10, p.getId());
 
 			int nro = st.executeUpdate();
 
@@ -110,7 +109,7 @@ public class DAOPersona {
 			p.setApellido1(resultado.getString("APELLIDO1"));
 			p.setApellido2(resultado.getString("APELLIDO2"));
 			p.setEmail(resultado.getString("EMAIL"));
-			p.setFechaNac(resultado.getDate("FECHA_NAC"));
+			p.setFechaNac(resultado.getDate("FECHA_NAC").toLocalDate());
 			Rol rol = new Rol(resultado.getInt("ROL_ID"), resultado.getString("ROL_NOMBRE"),
 					resultado.getString("ROL_DESCRIPCION"));
 			p.setRol(rol);
@@ -145,7 +144,7 @@ public class DAOPersona {
 			p.setNombre2(resultado.getString("NOMBRE2"));
 			p.setApellido1(resultado.getString("APELLIDO1"));
 			p.setApellido2(resultado.getString("APELLIDO2"));
-			p.setFechaNac(resultado.getDate("FECHA_NAC"));
+			p.setFechaNac(resultado.getDate("FECHA_NAC").toLocalDate());
 			Rol rol = new Rol(resultado.getInt("ROL_ID"), resultado.getString("ROL_NOMBRE"),
 					resultado.getString("ROL_DESCRIPCION"));
 			p.setRol(rol);

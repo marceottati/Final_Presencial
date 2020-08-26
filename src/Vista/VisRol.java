@@ -70,8 +70,9 @@ public class VisRol extends JFrame {
 	 * Create the frame.
 	 */
 	public VisRol() {
+		setTitle("Mantenimiento de roles");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 695, 378);
+		setBounds(100, 100, 695, 436);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -130,7 +131,7 @@ public class VisRol extends JFrame {
 		contentPane.add(btnModificar);
 		
 		scrollRol = new JScrollPane();
-		scrollRol.setBounds(406, 64, 263, 294);
+		scrollRol.setBounds(406, 64, 263, 315);
 		contentPane.add(scrollRol);
 		
 		construirTabla(ContRol.obtenerMatriz());
@@ -169,6 +170,7 @@ public class VisRol extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
+
 		btnAgregarFunc.setBounds(172, 197, 46, 23);
 		contentPane.add(btnAgregarFunc);
 		
@@ -185,6 +187,7 @@ public class VisRol extends JFrame {
 		cbFunc.setModel(modelo);
 		
 		btnEliminarFunc = new JButton("-");
+
 		btnEliminarFunc.setBounds(228, 197, 46, 23);
 		contentPane.add(btnEliminarFunc);
 		
@@ -196,7 +199,6 @@ public class VisRol extends JFrame {
 		btnNewButton = new JButton("Limpiar");
 		btnNewButton.setBounds(580, 30, 89, 23);
 		contentPane.add(btnNewButton);
-		
 	}
 	
 	public void construirTabla(String [][] info) {

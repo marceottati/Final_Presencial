@@ -178,8 +178,10 @@ public class ContRol implements ActionListener{
 		int id = Integer.parseInt(a);
 		this.rol = new Rol();
 		this.rol.setId(id);
-		LinkedList<Funcionalidad> func = DAOFuncionalidad.rol_Func(this.rol.getId());
+
+		LinkedList<Funcionalidad> func = DAOFuncionalidad.rol_Func(this.rol);
 		this.clearTable(this.vista.tablaRolFunc);
+
 		String matrizInfo [][] = new String[func.size()][3];
 		for (int i = 0; i < func.size(); i++) {
 			matrizInfo[i][0] = func.get(i).getId()+"";

@@ -18,14 +18,16 @@ import java.awt.event.ActionEvent;
 public class VisMenu extends JFrame {
 
 	private JPanel contentPane;
-	private static Persona persona;
-	private JLabel lblBienvenido;
+	public JLabel lblBienvenido;
+	public JButton btnPersona;
+	public JButton btnRoles;
+	public JButton btnFuncionalidades;
 
 	/**
 	 * Create the frame.
 	 */
-	public VisMenu(Persona p) {
-		this.persona = p;
+	public VisMenu() {
+		setTitle("Menú general");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 673, 416);
 		contentPane = new JPanel();
@@ -33,21 +35,21 @@ public class VisMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		lblBienvenido = new JLabel("\u00A1BIENVENIDO  " + this.persona.getNombre1().toUpperCase() + "!");
+		lblBienvenido = new JLabel("\u00A1BIENVENIDO!");
 		lblBienvenido.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblBienvenido.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenido.setBounds(10, 44, 684, 31);
 		contentPane.add(lblBienvenido);
 
-		JButton btnPersona = new JButton("Personas");
+		btnPersona = new JButton("Personas");
 		btnPersona.setBounds(97, 116, 462, 91);
 		contentPane.add(btnPersona);
 
-		JButton btnRoles = new JButton("Roles");
+		btnRoles = new JButton("Roles");
 		btnRoles.setBounds(97, 219, 225, 91);
 		contentPane.add(btnRoles);
 
-		JButton btnFuncionalidades = new JButton("Funcionalidades");
+		btnFuncionalidades = new JButton("Funcionalidades");
 		btnFuncionalidades.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -58,9 +60,7 @@ public class VisMenu extends JFrame {
 		this.setVisible(true);
 	}
 
-	public void setVisible(Persona p) {
-		this.persona = p;
-		this.lblBienvenido.setText("\u00A1BIENVENIDO " + this.persona.getNombre1() + "!");
+	public void setVisible() {
 		this.setVisible(true);
 	}
 }
