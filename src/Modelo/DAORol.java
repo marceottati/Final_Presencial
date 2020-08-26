@@ -16,7 +16,7 @@ import Inicio.Conexion;
 public class DAORol {
 	private static final String ALL_ROLES ="SELECT * FROM ROLES";
 	private static final String INSERT_ROLES ="INSERT INTO ROLES (NOMBRE, DESCRIPCION) VALUES (?,?)";
-	private static final String UPDATE_ROLES ="UPDATE ROLES SET NOMBRE=?, SET DESCRIPCION=? WHERE ID = ?";
+	private static final String UPDATE_ROLES ="UPDATE ROLES SET NOMBRE=?, DESCRIPCION=? WHERE ID = ?";
 	private static final String SEARCHbyID ="SELECT * FROM ROLES WHERE ID = ?";
 	private static final String DELETE_ROL="DELETE FROM ROLES WHERE ID = ?";
 	
@@ -76,11 +76,11 @@ public class DAORol {
 		}
 	}
 	
-	public static LinkedList<Rol> find(int id){
+	public static LinkedList<Rol> find(Rol rol){
 		LinkedList<Rol> roles = new LinkedList<Rol>();
 		try {
 			PreparedStatement stmt = Conexion.getConnection().prepareStatement(SEARCHbyID);
-			stmt.setInt(1, id);
+			stmt.setInt(1, rol.getId());
 			ResultSet resultado = stmt.executeQuery();
 			
 			while (resultado.next()) {

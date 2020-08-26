@@ -24,6 +24,7 @@ import Modelo.Rol;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
+import java.awt.Font;
 
 public class VisRol extends JFrame {
 
@@ -39,13 +40,16 @@ public class VisRol extends JFrame {
 	public JTextField txtBuscar;
 	public JButton btnBuscar;
 	private JTable TablaRol;
-	private JTable Tabla_Rol;
+	public JTable Tabla_Rol;
 	private JScrollPane scrollPane;
 	private JTable TablaFunc;
 	public JTable tablaRolFunc;
 	public JButton btnAgregarFunc;
 	public JButton btnEliminarFunc;
 	public JComboBox cbFunc;
+	private JLabel lblNewLabel;
+	public JButton btnNewButton;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -132,16 +136,16 @@ public class VisRol extends JFrame {
 		construirTabla(ContRol.obtenerMatriz());
 		
 		txtBuscar = new JTextField();
-		txtBuscar.setBounds(406, 33, 131, 20);
+		txtBuscar.setBounds(406, 33, 67, 20);
 		contentPane.add(txtBuscar);
 		txtBuscar.setColumns(10);
 		
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(547, 30, 89, 23);
+		btnBuscar.setBounds(483, 30, 89, 23);
 		contentPane.add(btnBuscar);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 185, 297, 127);
+		scrollPane.setBounds(10, 231, 297, 127);
 		contentPane.add(scrollPane);
 		
 		tablaRolFunc = new JTable();
@@ -165,11 +169,11 @@ public class VisRol extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnAgregarFunc.setBounds(170, 151, 46, 23);
+		btnAgregarFunc.setBounds(172, 197, 46, 23);
 		contentPane.add(btnAgregarFunc);
 		
 		cbFunc = new JComboBox();
-		cbFunc.setBounds(21, 152, 115, 20);
+		cbFunc.setBounds(23, 198, 115, 20);
 		contentPane.add(cbFunc);
 		
 		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
@@ -181,8 +185,17 @@ public class VisRol extends JFrame {
 		cbFunc.setModel(modelo);
 		
 		btnEliminarFunc = new JButton("-");
-		btnEliminarFunc.setBounds(226, 151, 46, 23);
+		btnEliminarFunc.setBounds(228, 197, 46, 23);
 		contentPane.add(btnEliminarFunc);
+		
+		lblNewLabel = new JLabel("Funcionalidades del ROL seleccionado");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblNewLabel.setBounds(23, 160, 281, 14);
+		contentPane.add(lblNewLabel);
+		
+		btnNewButton = new JButton("Limpiar");
+		btnNewButton.setBounds(580, 30, 89, 23);
+		contentPane.add(btnNewButton);
 		
 	}
 	

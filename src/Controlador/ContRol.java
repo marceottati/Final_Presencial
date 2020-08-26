@@ -30,6 +30,7 @@ public class ContRol implements ActionListener{
 		this.vista.btnAgregarFunc.addActionListener(this);
 		this.vista.btnBuscar.addActionListener(this);
 		this.vista.btnEliminarFunc.addActionListener(this);
+		this.vista.btnNewButton.addActionListener(this);
 	}
 
 	@Override
@@ -37,18 +38,23 @@ public class ContRol implements ActionListener{
 		Object obj = e.getSource();
 		if (obj == this.vista.btnEliminar) {
 			this.delete();
+			this.vista.construirTabla(obtenerMatriz());
 		} else if (obj == this.vista.btnModificar) {
 			this.update();
+			this.vista.construirTabla(obtenerMatriz());
 		}else if (obj== this.vista.btnBuscar) {
 			this.search();
 		}else if (obj==this.vista.btnRegistrar) {
 			this.insert();
+			this.vista.construirTabla(obtenerMatriz());
 		}else if (obj==this.vista.btnAgregarFunc) {
 			this.agregarFuncARol();
 			this.vista.crearTablaFunc(searchFunc(this.vista.txtId.getText()));
-			}else if (obj==this.vista.btnEliminarFunc) {
+		}else if (obj==this.vista.btnEliminarFunc) {
 			this.eliminarFuncARol();
 			this.vista.crearTablaFunc(searchFunc(this.vista.txtId.getText()));
+		}else if (obj==this.vista.btnNewButton) {
+			this.vista.construirTabla(obtenerMatriz());
 		}
 	}
 	
@@ -67,13 +73,17 @@ public class ContRol implements ActionListener{
 	}
 	
 	public void update() {
+		String ids = this.vista.txtId.getText();
 		String nom = this.vista.txtNom.getText();
 		String desc = this.vista.txtDesc.getText();
 		if (this.controlVacio(nom)||this.controlVacio(desc)) {
 			JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos","Error", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
+
+		int id = Integer.parseInt(ids);
 		this.rol = new Rol();
+		this.rol.setId(id);
 		this.rol.setNombre(nom);
 		this.rol.setDescripcion(desc);
 		if (DAORol.update(this.rol)) {
@@ -104,7 +114,7 @@ public class ContRol implements ActionListener{
 		}
 	}
 	
-	public static void clearTable(final JTable table) {
+	public void clearTable(final JTable table) {
 	   for (int i = 0; i < table.getRowCount(); i++) {
 	      for(int j = 0; j < table.getColumnCount(); j++) {
 	          table.setValueAt("", i, j);
@@ -113,10 +123,15 @@ public class ContRol implements ActionListener{
 	}
 	
 	public void search() {
-		int id = Integer.parseInt(this.vista.txtBuscar.getText());
+		String idS = this.vista.txtBuscar.getText();
+		if (this.controlVacio(idS)) {
+			JOptionPane.showMessageDialog(null, "El campo no puede estar vacío","Error", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		int id = Integer.parseInt(idS);
 		this.rol.setId(id);
-		LinkedList<Rol> roles = DAORol.find(this.rol.getId());
-		this.clearTable(this.vista.tablaRol);
+		LinkedList<Rol> roles = DAORol.find(this.rol);
+		this.clearTable(this.vista.Tabla_Rol);
 		String matrizInfo [][] = new String[roles.size()][3];
 		for (int i = 0; i < roles.size(); i++) {
 			matrizInfo[i][0] = roles.get(i).getId()+"";
@@ -164,7 +179,7 @@ public class ContRol implements ActionListener{
 		this.rol = new Rol();
 		this.rol.setId(id);
 		LinkedList<Funcionalidad> func = DAOFuncionalidad.rol_Func(this.rol.getId());
-		ContRol.clearTable(this.vista.tablaRolFunc);
+		this.clearTable(this.vista.tablaRolFunc);
 		String matrizInfo [][] = new String[func.size()][3];
 		for (int i = 0; i < func.size(); i++) {
 			matrizInfo[i][0] = func.get(i).getId()+"";
@@ -196,5 +211,5 @@ public class ContRol implements ActionListener{
 		}else {
 			Auxiliar.avisar("Error al agregar la funcionalidad", "Error");
 		}
-	}
+	} 
 }
