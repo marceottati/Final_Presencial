@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package Modelo;
 
@@ -9,31 +14,27 @@ import java.util.LinkedList;
 import Inicio.Conexion;
 
 public class DAORol {
-	
-//*************************************SENTENCIAS PRECOMPILADAS TABLA ROLES***********************************************************
-	
 	private static final String ALL_ROLES ="SELECT * FROM ROLES";
 	private static final String INSERT_ROLES ="INSERT INTO ROLES (NOMBRE, DESCRIPCION) VALUES (?,?)";
 	private static final String UPDATE_ROLES ="UPDATE ROLES SET NOMBRE=?, SET DESCRIPCION=? WHERE ID = ?";
 	private static final String SEARCHbyID ="SELECT * FROM ROLES WHERE ID = ?";
 	private static final String DELETE_ROL="DELETE FROM ROLES WHERE ID = ?";
 	
-//**************************************MÉTODO MOSTRAR REGISTROS DE TABLA ROLES*******************************************************
-	
 	public static LinkedList<Rol> findAll(){
 		LinkedList<Rol> roles = new LinkedList<Rol>();
 		try {
 			PreparedStatement stmt = Conexion.getConnection().prepareStatement(ALL_ROLES);
 			ResultSet resultado = stmt.executeQuery();
-			
 			while (resultado.next()) {
-				int id = resultado.getInt("ID");
+				String ids = resultado.getString("ID");
 				String nombre = resultado.getString("NOMBRE");
-				String desc = resultado.getString("desc");
+				String desc = resultado.getString("DESCRIPCION");
 				Rol r = new Rol();
+				int id = Integer.parseInt(ids);
 				r.setId(id);
 				r.setNombre(nombre);
 				r.setDescripcion(desc);
+				
 				roles.add(r);
 			}
 			return roles;
@@ -42,7 +43,6 @@ public class DAORol {
 		return null;
 		}
 	}
-//**********************************MÉTODO PARA INSERTAR REGISTROS EN LA TABLA ROLES****************************************************
 	
 	public static boolean insert(Rol r) {
 		try {
@@ -58,8 +58,6 @@ public class DAORol {
 			return false;
 		}
 	}
-	
-//**********************************MÉTODO PARA ACTUALIZAR REGISTROS EN LA TABLA ROLES***************************************************
 	
 	public static boolean update(Rol r) {
 		try {
@@ -77,33 +75,31 @@ public class DAORol {
 			return false;
 		}
 	}
-//**********************************MÉTODO PARA BUSCAR REGISTROS DE LA TABLA ROLES SEGÚN ID**********************************************
 	
-	public static Rol find (Rol rol){
-		
+	public static LinkedList<Rol> find(int id){
+		LinkedList<Rol> roles = new LinkedList<Rol>();
 		try {
 			PreparedStatement stmt = Conexion.getConnection().prepareStatement(SEARCHbyID);
-			stmt.setInt(1, rol.getId());
+			stmt.setInt(1, id);
 			ResultSet resultado = stmt.executeQuery();
 			
-			if (resultado.next()==false) {
-				return null;
-			}
-				
+			while (resultado.next()) {
+				int ID = Integer.parseInt(resultado.getString("ID"));
 				String nombre = resultado.getString("NOMBRE");
 				String desc = resultado.getString("DESCRIPCION");
-			
-				rol.setNombre(nombre);
-				rol.setDescripcion(desc);
-							
-			return rol;
+				Rol r = new Rol();
+				r.setId(ID);
+				r.setNombre(nombre);
+				r.setDescripcion(desc);
+				roles.add(r);
+			}
+			return roles;
 		} catch (SQLException e) {
 		e.printStackTrace();
 		return null;
 		}
 	}
 	
-//**********************************MÉTODO PARA ELIMINAR REGISTROS DE LA TABLA ROLES*******************************************************	
 	public static boolean delete(int id){
 		try {
 			PreparedStatement statement = Conexion.getConnection().prepareStatement(DELETE_ROL);
@@ -118,5 +114,5 @@ public class DAORol {
 		}	
 		
 	}
-//**************************************************************************************************************************************	
+	
 }

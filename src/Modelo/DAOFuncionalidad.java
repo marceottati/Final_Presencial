@@ -11,20 +11,29 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 import Inicio.Conexion;
-import Modelo.Funcionalidad;
 
 /**
  *
  * @author tecnico
  */
 public class DAOFuncionalidad {
-	private static final String ALL_FUNCIONALIDADES = "SELECT * FROM FUNCIONALIDADES ORDER BY ID_FUNCIONALIDAD";
-	private static final String INSERT_FUNCIONALIDAD = "INSERT INTO FUNCIONALIDADES (DESCRIPCION, NOMBRE) VALUES (?,?)";
-	private static final String UPDATE_FUNCIONALIDAD = "UPDATE FUNCIONALIDADES SET DESCRIPCION=?, NOMBRE=?  WHERE ID_FUNCIONALIDAD=?";
-	private static final String DELETE_FUNCIONALIDAD = "DELETE FROM FUNCIONALIDADES WHERE ID_FUNCIONALIDAD=?";
-	private static final String SELECCIONAR_BY_ID_FUNCIONALIDAD = "SELECT * FROM ROLES WHERE ID_FUNCIONALIDAD=?";
-	private static final String ROL_FUNCIONALIDADES = "SELECT f.* FROM Funcionalidades f LEFT JOIN ROLES_FUNCIONALIDADES RF ON f.id = RF.id_funcion WHERE RF.id_rol=?";
+	private static final String ALL_FUNCIONALIDADES = "SELECT * FROM FUNCIONALIDADES ORDER BY ID";
 
+	private static final String INSERT_FUNCIONALIDAD = "INSERT INTO FUNCIONALIDADES (DESCRIPCION, NOMBRE) VALUES (?,?)";
+
+	private static final String UPDATE_FUNCIONALIDAD = "UPDATE FUNCIONALIDADES SET DESCRIPCION=?, NOMBRE=?  WHERE ID_FUNCIONALIDAD=?";
+
+	private static final String DELETE_FUNCIONALIDAD = "DELETE FROM FUNCIONALIDADES WHERE ID_FUNCIONALIDAD=?";
+
+	private static final String SELECCIONAR_BY_ID_FUNCIONALIDAD = "SELECT * FROM ROLES WHERE ID_FUNCIONALIDAD=?";
+
+	private static final String ROL_FUNCIONALIDADES = "SELECT f.* FROM Funcionalidades f LEFT JOIN ROLES_FUNCIONALIDADES RF ON f.id = RF.FUNCIONALIDAD_ID WHERE RF.ROL_ID=?";
+	
+	//SENTENCIAS DE LA TABLA N N
+	private static final String DELETE_ROL_FUNC = "DELETE FROM ROLES_FUNCIONALIDADES WHERE ROL_ID=? AND FUNCIONALIDAD_ID=?";
+	private static final String INSERT_ROL_FUNC = "INSERT INTO ROLES_FUNCIONALIDADES(ROL_ID, FUNCIONALIDAD_ID) VALUES(?, ?)";
+	private static final String UPDATE_ROL_FUNC = "UPDATE ROLES_FUNCIONALIDADES SET ROL_ID=?, FUNCIONALIDAD_ID=?";
+	//*************************************************************************************************************
 	/**
 	 * FUNCION findFuncionalidades RETORNA UN OBJETO FUNCIONALIDAD DADO SU ID
 	 * 
@@ -93,7 +102,6 @@ public class DAOFuncionalidad {
 	 */
 	public boolean updateFuncionalidad(Funcionalidad f) {
 		try {
-			boolean resultado = false;
 			PreparedStatement st = Conexion.getConnection().prepareStatement(UPDATE_FUNCIONALIDAD);
 
 			st.setString(1, f.getDescripcion());
@@ -149,7 +157,7 @@ public class DAOFuncionalidad {
 
 			while (resultado.next()) {
 				Funcionalidad f = new Funcionalidad();
-				f.setId(resultado.getInt("ID_FUNCIONALIDAD"));
+				f.setId(resultado.getInt("ID"));
 				f.setDescripcion(resultado.getString("DESCRIPCION"));
 				f.setNombre(resultado.getString("NOMBRE"));
 				Funcionalidades.add(f);
@@ -161,6 +169,7 @@ public class DAOFuncionalidad {
 		}
 	}
 
+		
 	public static LinkedList<Funcionalidad> rol_Func(int id) {
 		LinkedList<Funcionalidad> Funcionalidades = new LinkedList<>();
 
@@ -169,7 +178,7 @@ public class DAOFuncionalidad {
 			PreparedStatement st = Conexion.getConnection().prepareStatement(ROL_FUNCIONALIDADES);
 			st.setInt(1, id);
 			ResultSet resultado = st.executeQuery();
-
+			System.out.println("cos");
 			while (resultado.next()) {
 				Funcionalidad f = new Funcionalidad();
 				f.setId(resultado.getInt("ID"));
@@ -181,6 +190,75 @@ public class DAOFuncionalidad {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	//******************************************ROLES_FUNCIONALIDADES************************************************
+	/**
+	 * FUNCIÓN INSERT_FOL_FUNC
+	 * @param rol
+	 * @param func
+	 * @return boolean
+	 */
+	public static boolean INSERT_Rol_Func(int rol, int func) {
+		try {
+			PreparedStatement st = Conexion.getConnection().prepareStatement(INSERT_ROL_FUNC);
+			st.setInt(1, rol);
+			st.setInt(2, func);
+			
+			int resultado = st.executeUpdate();
+			
+			return (resultado>0);
+		}catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
+	
+	/**
+	 * UPDATE_Rol_Func
+	 * @param rol
+	 * @param func
+	 * @return boolean
+	 */
+	public static boolean UPDATE_Rol_Func(int rol, int func) {
+		
+		try {
+			
+			PreparedStatement st = Conexion.getConnection().prepareStatement(UPDATE_ROL_FUNC);
+			st.setInt(1, rol);
+			st.setInt(2, func);
+			
+			int resultado = st.executeUpdate();
+			
+			return (resultado>0);
+		}catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * DELETE_Rol_Func
+	 * @param rol
+	 * @param func
+	 * @return boolean
+	 */
+	public static boolean DELETE_Rol_Func(int rol, int func) {
+		
+		try {
+			
+			PreparedStatement st = Conexion.getConnection().prepareStatement(DELETE_ROL_FUNC);
+			st.setInt(1, rol);
+			st.setInt(2, func);
+			
+			int resultado = st.executeUpdate();
+			
+			return (resultado>0);
+		}catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
 		}
 	}
 }
