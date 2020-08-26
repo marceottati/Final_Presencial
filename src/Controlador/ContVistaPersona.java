@@ -8,11 +8,14 @@ package Controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 import javax.xml.crypto.Data;
 
+import Inicio.Auxiliar;
 import Modelo.DAOFuncionalidad;
 import Modelo.DAOPersona;
 import Modelo.DAORol;
@@ -20,11 +23,6 @@ import Modelo.Persona;
 import Modelo.Rol;
 import Vista.VisPersona;
 
-/**
- *
- * @author tecnico
- * @param <Date>
- */
 public class ContVistaPersona<Date> implements ActionListener {
 	private VisPersona vispersona;
 	private Persona persona;
@@ -60,46 +58,63 @@ public class ContVistaPersona<Date> implements ActionListener {
 		cargarComboRoles();
 	}
 
-	// *************************************************************************************************
 
+	/**
+	 * 
+	 */
 	public void cargarComboRoles() {
-		this.vispersona.comboRol.add(DAORol.findAll());
+		LinkedList<Rol> roles = DAORol.findAll();
+		for (Rol rol : roles) {
+			this.vispersona.comboRol.addItem(rol);
+		}
+		
 	}
+
+	/**
+	 * 
+	 */
 	public void delete() {
 		String documento = this.vispersona.textDocumento.getText();
 		if (this.controlVacio(documento)) {
-			JOptionPane.showMessageDialog(null, "El campo documento no puede estar vacío", "Error",
-					JOptionPane.INFORMATION_MESSAGE);
+			 Auxiliar.avisar("El campo documento no puede estar vacío", "info");
 			return;
 		}
-		int sino = JOptionPane.showConfirmDialog(null, "Seguro que quiere eliminar este registro?", "Confirmar",
-				JOptionPane.YES_NO_OPTION);
+		int sino = JOptionPane.showConfirmDialog(null, "Seguro que quiere eliminar este registro?", "Confirmar", JOptionPane.YES_NO_OPTION);
 		if (sino == JOptionPane.YES_OPTION) {
-			if (DAOPersona.delete(documento)) {
+			this.persona = new Persona();
+			this.persona.setDocumento(documento);
+			if (DAOPersona.delete(this.persona)) {
 				this.clean();
-				JOptionPane.showMessageDialog(null, "Exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+				Auxiliar.avisar("Se eliminó el registro de persona", "info");
 			} else {
-				JOptionPane.showMessageDialog(null, "No se pudo eliminar el registro", "Error",
-						JOptionPane.INFORMATION_MESSAGE);
+				Auxiliar.avisar("No se pudo eliminar el registro", "info");
 			}
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void update() {
 		String documento = this.vispersona.textDocumento.getText();
 		String apellido1 = this.vispersona.textApellido1.getText();
 		String apellido2 = this.vispersona.textApellido2.getText();
 		String nombre1 = this.vispersona.textNombre1.getText();
 		String nombre2 = this.vispersona.textNombre2.getText();
-		java.sql.Date fn = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(this.vispersona.textFN.getText());
+		java.sql.Date fn = null;
+		try {
+			fn = (java.sql.Date) new SimpleDateFormat("dd/MM/yyyy").parse(this.vispersona.textFN.getText());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String clave = this.vispersona.textClave.getText();
-		Object rol = this.vispersona.comboRol.getSelectedItem();
+		Rol rol = (Rol) this.vispersona.comboRol.getSelectedItem();
 		String email = this.vispersona.textEmail.getText();
 
 		if (this.controlVacio(documento) || this.controlVacio(apellido1) || this.controlVacio(apellido2)
 				|| this.controlVacio(nombre1) || this.controlVacio(nombre2) || this.controlVacio(clave)) {
-			JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos", "Error",
-					JOptionPane.INFORMATION_MESSAGE);
+			Auxiliar.avisar("Los campos no pueden estar vacíos", "info");
 			return;
 		}
 		this.persona = new Persona(documento, apellido1, apellido2, nombre1, nombre2, fn, clave, email, rol);
@@ -112,17 +127,25 @@ public class ContVistaPersona<Date> implements ActionListener {
 		}
 	}
 
-	// *************************************************************************************************
+	/**
+	 * 
+	 */
 	public void insert() {
 		String documento = this.vispersona.textDocumento.getText();
 		String apellido1 = this.vispersona.textApellido1.getText();
 		String apellido2 = this.vispersona.textApellido2.getText();
 		String nombre1 = this.vispersona.textNombre1.getText();
 		String nombre2 = this.vispersona.textNombre2.getText();
-		String fn = this.vispersona.textFN.getText();
+		java.sql.Date fn = null;
+		try {
+			fn = (java.sql.Date) new SimpleDateFormat("dd/MM/yyyy").parse(this.vispersona.textFN.getText());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String clave = this.vispersona.textClave.getText();
 		String email = this.vispersona.textEmail.getText();
-		Object rol = this.vispersona.comboRol.getSelectedItem();
+		Rol rol = (Rol) this.vispersona.comboRol.getSelectedItem();
 
 		if (this.controlVacio(documento) || this.controlVacio(nombre1) || this.controlVacio(apellido1)) {
 			JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos", "Error",
@@ -140,8 +163,9 @@ public class ContVistaPersona<Date> implements ActionListener {
 
 	}
 
-	// *******************************METODO LIMPIAR
-	// CAMPOS*********************************************
+	/**
+	 * 
+	 */
 	public void clean() {
 		this.vispersona.textDocumento.setText(null);
 		this.vispersona.textNombre1.setText(null);
@@ -153,8 +177,11 @@ public class ContVistaPersona<Date> implements ActionListener {
 		this.vispersona.textEmail.setText(null);
 	}
 
-	// ***********************************METODO COMPROBAR
-	// CAMPOS**************************************
+	/**
+	 * 
+	 * @param txt
+	 * @return
+	 */
 	public boolean controlVacio(String txt) {
 		return txt.isEmpty();
 	}

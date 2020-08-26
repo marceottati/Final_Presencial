@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VisPersona {
+public class VisPersona extends JFrame{
 
 	public JFrame frmMantenimientoDePersona;
 	public JTextField textDocumento;
@@ -29,27 +29,15 @@ public class VisPersona {
 	public JButton btnEliminar;
 	public JButton btnEditar;
 	public JComboBox comboRol;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VisPersona window = new VisPersona();
-					window.frmMantenimientoDePersona.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the application.
 	 */
 	public VisPersona() {
+		VisPersona window = new VisPersona();
 		initialize();
+		window.frmMantenimientoDePersona.setVisible(true);
 	}
 
 	/**
