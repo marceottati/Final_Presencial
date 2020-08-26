@@ -26,6 +26,7 @@ public class ContLogin implements ActionListener {
 	public ContLogin(VisLogin vistaLogin) {
 		this.vistaLogin = vistaLogin;
 		this.persona = new Persona();
+		this.vistaLogin.btnLogin.addActionListener(this);
 	}
 
 	public void mostrarLogin() {
@@ -38,19 +39,18 @@ public class ContLogin implements ActionListener {
 		if (obj == this.vistaLogin.btnLogin) {
 			String email = vistaLogin.txtEmail.getText();
 			String pass = vistaLogin.txtPass.getText();
+			Auxiliar.avisar(email, "info");
 			if (email.equals("") || pass.equals("")) {
 				Auxiliar.avisar("Los campos email y contraseña son obligatorios", "error");
 				return;
 			}
-			this.login(email, pass);
+			this.persona = DAOPersona.login(email, pass);
+			if(this.persona == null) {
+				Auxiliar.avisar("No se encontró usuario", "info");
+				return;
+			}
+			VisMenu vm = new VisMenu(this.persona);
 		}
-	}
-
-	public void login(String email, String pass) {
-
-		this.persona = DAOPersona.login(email, pass);
-		VisMenu vm = new VisMenu();
-		vm.setVisible(this.persona);
 	}
 
 }

@@ -12,8 +12,8 @@ public class Conexion {
 
     private static Connection connection;
     private static String URI = "jdbc:oracle:thin:@localhost:1521:xe";
-    private static String USR = "JAVA";
-    private static String PASS = "JAVA";
+    private static String USR = "LOGIN";
+    private static String PASS = "LOGIN";
 
     static {
         connection = null;
