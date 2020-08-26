@@ -1,9 +1,3 @@
-/*
-  
-ÚLTIMAS MODIFICACIONES -----------
-20200825 > Landro > modificación > login, insert, update
-VAMO LO PIBE
-*/
 
 package Modelo;
 
@@ -15,8 +9,9 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class DAOPersona {
+	
+//*************************************SENTENCIAS PRECOMPILADAS TABLA PERSONAS**********************************************************************************	
 
-//    private static final String PERSONASXID = "SELECT * FROM PERSONAS WHERE ID_PERSONA=?";
 	private static final String txt = "p.*, r.NOMBRE ROL_NOMBRE, r.DESCRIPCION ROL_DESCRIPCION FROM PERSONAS p INNER JOIN ROLES r ON p.ROL_ID = r.ID";
 	private static final String PERSONA_X_DOCUMENTO = "SELECT " + txt + " WHERE DOCUMENTO=?";
 	private static final String LOGIN = "SELECT " + txt + " WHERE EMAIL=? AND PASS=?";
@@ -24,11 +19,12 @@ public class DAOPersona {
 	private static final String UPDATE_PERSONAS = "UPDATE PERSONAS SET DOCUMENTO=?, APELLIDO1=?, APELLIDO2=?, NOMBRE1=?, NOMBRE2=?, FECHA_NAC=?, PASS=?, ROL_ID=?, EMAIL=? WHERE ID=?";
 	private static final String OBTENER_TODOS = "SELECT " + txt + " WHERE p.EMAIL = ? AND p.PASS = ?";
 	private static final String DELETE = "DELETE FROM PERSONAS WHERE p.DOCUMENTO = ?";
-
+	
+//**********************************MÉTODO PARA INSERTAR REGISTROS EN LA TABLA PERSONAS*************************************************************************
 	/**
-	 * 
-	 * @param p
-	 * @return
+	 * INSERT
+	 * @param PERSONA
+	 * @return BOOLEAN
 	 */
 	public static boolean insert(Persona p) {
 		try {
@@ -53,11 +49,11 @@ public class DAOPersona {
 			return false;
 		}
 	}
-
+//**********************************MÉTODO PARA ACTAULIZAR REGISTROS EN LA TABLA PERSONAS**********************************************************************
 	/**
-	 * 
-	 * @param p
-	 * @return
+	 * UPDATE
+	 * @param PERSONA
+	 * @return PERSONA
 	 */
 	public static boolean update(Persona p) {
 		try {
@@ -82,12 +78,12 @@ public class DAOPersona {
 			return false;
 		}
 	}
-
+	
+//*****************************MÉTODO PARA BUSCAR REGISTROS EN LA TABLA PERSONAS SEGÚN DOCUMENTO**************************************************************
 	/**
-	 * findPersonaXDocumento dado un documento retorna una persona
-	 * 
-	 * @param documento
-	 * @return
+	 * FINDPERSONAXDOCUMENTO
+	 * @param DOCUMENTO
+	 * @return PERSONA
 	 */
 	public Persona findPersonaXDocumento(String documento) {
 		try {
@@ -117,12 +113,12 @@ public class DAOPersona {
 			return null;
 		}
 	}
-
+//**********************************MÉTODO PARA LOGUEAR EN LA TABLA PERSONAS*********************************************************************************
 	/**
-	 * 
-	 * @param email
-	 * @param pass
-	 * @return
+	 * LOGIN
+	 * @param EMAIL
+	 * @param PASS
+	 * @return PERSONA
 	 */
 	public static Persona login(String email, String pass) {
 		try {
@@ -156,11 +152,12 @@ public class DAOPersona {
 			return null;
 		}
 	}
-
+	
+//**********************************MÉTODO PARA ELIMINAR REGISTROS DE LA TABLA PERSONAS********************************************************************	
 	/**
-	 * 
-	 * @param p
-	 * @return
+	 * DELETE
+	 * @param PERSONA
+	 * @return BOOLEAN
 	 */
 	public static Boolean delete(Persona p) {
 		try {
@@ -174,13 +171,13 @@ public class DAOPersona {
 			return null;
 		}
 	}
-
+	
+//***********************************MÉTODO PARA OBTENER UNA PERSONA DE LA TABLA PERSONAS****************************************************************
 	/**
-	 * Obtener persona desde base de datos
-	 *
-	 * @param email
-	 * @param pass
-	 * @return Persona en caso que se encuentre
+	 * OBTENER PERSONA DESDE BASE DE DATOS
+	 * @param MAIL
+	 * @param PASS
+	 * @return UNA PERSONA EN CASO DE QUE LA ENCUENTRE
 	 */
 	public static LinkedList<Persona> obtenerDesdeBD(String email, String pass) throws Exception {
 		try {
@@ -224,65 +221,6 @@ public class DAOPersona {
 		}
 
 	}
+//******************************************************************************************************************************************************
 
-//	public Persona findXApellido1Nombre1(String apellido1, String nombre1) {
-//
-//		try {
-//			Persona p = new Persona();
-//			PreparedStatement st = Conexion.getConnection().prepareStatement(BUSCAR_PERSONA);
-//
-//			st.setString(1, apellido1);
-//			st.setString(2, nombre1);
-//
-//			ResultSet resultado = st.executeQuery();
-//
-//			while (resultado.next()) {
-//				p.setId(resultado.getInt("ID_PERSONA"));
-//				p.setDocumento(resultado.getString("DOCUMENTO"));
-//				p.setNombre1(resultado.getString("NOMBRE1"));
-//				p.setNombre2(resultado.getString("NOMBRE2"));
-//				p.setApellido1(resultado.getString("APELLIDO1"));
-//				p.setApellido2(resultado.getString("APELLIDO2"));
-//				p.setEmail(resultado.getString("EMAIL"));
-//				p.setFechaNac(resultado.getDate("FECHA_NAC"));
-//			}
-//
-//			return p;
-//
-//		} catch (SQLException ex) {
-//			System.out.println(ex.getMessage());
-//			return null;
-//		}
-//
-//	}
-
-	/**
-	 * Función personaXID, dado un ID se devuelve la Persona
-	 * 
-	 * @param id
-	 * @return Persona
-	 */
-//	public Persona findPersonaXID(int id) {
-//		try {
-//			Persona p = new Persona();
-//			PreparedStatement st = Conexion.getConnection().prepareStatement(PERSONASXID);
-//			st.setInt(1, id);
-//			ResultSet resultado = st.executeQuery();
-//
-//			while (resultado.next()) {
-//				p.setId(resultado.getInt("ID_PERSONA"));
-//				p.setDocumento(resultado.getString("DOCUMENTO"));
-//				p.setNombre1(resultado.getString("NOMBRE1"));
-//				p.setNombre2(resultado.getString("NOMBRE2"));
-//				p.setApellido1(resultado.getString("APELLIDO1"));
-//				p.setApellido2(resultado.getString("APELLIDO2"));
-//				p.setEmail(resultado.getString("EMAIL"));
-//				p.setFechaNac(resultado.getDate("FECHA_NAC"));
-//			}
-//			return p;
-//		} catch (Exception ex) {
-//			System.out.println(ex.getMessage());
-//			return null;
-//		}
-//	}
 }
