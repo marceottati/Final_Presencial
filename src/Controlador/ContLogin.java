@@ -44,7 +44,9 @@ public class ContLogin implements ActionListener {
 				Auxiliar.avisar("Los campos email y contraseña son obligatorios", "error");
 				return;
 			}
-			this.persona = DAOPersona.login(email, pass);
+			this.persona.setEmail(email);
+			this.persona.setPass(pass);
+			this.persona = DAOPersona.login(this.persona);
 			if(this.persona == null) {
 				Auxiliar.avisar("No se encontró usuario", "info");
 				return;
