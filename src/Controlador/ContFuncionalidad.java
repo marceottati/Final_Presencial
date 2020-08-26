@@ -13,12 +13,9 @@ import Modelo.Funcionalidad;
 import Modelo.Persona;
 import Modelo.Rol;
 import Vista.VisFuncionalidad;
-<<<<<<< Updated upstream
-//import Vista.VisRol;
-=======
+
 import Vista.VisRol;
 import Modelo.DAOFuncionalidad;
->>>>>>> Stashed changes
 
 public class ContFuncionalidad implements ActionListener {
 	private Funcionalidad funcionalidad;
@@ -110,14 +107,6 @@ public class ContFuncionalidad implements ActionListener {
 
 	}
 
-<<<<<<< Updated upstream
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-=======
 	/**
 	 * 
 	 */
@@ -135,5 +124,5 @@ public class ContFuncionalidad implements ActionListener {
 	public boolean controlVacio(String txt) {
 		return txt.isEmpty();
 	}
->>>>>>> Stashed changes
+
 }
