@@ -5,10 +5,9 @@
 
 */
 
-
-
 package Modelo;
 
+import Inicio.Auxiliar;
 import Inicio.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,10 +19,10 @@ public class DAOPersona {
 //    private static final String PERSONASXID = "SELECT * FROM PERSONAS WHERE ID_PERSONA=?";
 	private static final String txt = "p.*, r.NOMBRE ROL_NOMBRE, r.DESCRIPCION ROL_DESCRIPCION FROM PERSONAS p INNER JOIN ROLES r ON p.ROL_ID = r.ID";
 	private static final String PERSONA_X_DOCUMENTO = "SELECT " + txt + " WHERE DOCUMENTO=?";
-	private static final String LOGIN = "SELECT " + txt + " WHERE DOCUMENTO=?";
+	private static final String LOGIN = "SELECT " + txt + " WHERE EMAIL=? AND PASS=?";
 	private static final String INSERT_PERSONAS = "INSERT INTO PERSONAS (DOCUMENTO, APELLIDO1, APELLIDO2, NOMBRE1, NOMBRE2, FECHA_NAC, PASS, ROL_ID, EMAIL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_PERSONAS = "UPDATE PERSONAS SET DOCUMENTO=?, APELLIDO1=?, APELLIDO2=?, NOMBRE1=?, NOMBRE2=?, FECHA_NAC=?, PASS=?, ROL_ID=?, EMAIL=? WHERE ID=?";
-	private static final String OBTENER_TODOS = "SELECT " + txt + " WHERE p.MAIL = ? AND p.CLAVE = ?";
+	private static final String OBTENER_TODOS = "SELECT " + txt + " WHERE p.EMAIL = ? AND p.PASS = ?";
 	private static final String DELETE = "DELETE FROM PERSONAS WHERE p.DOCUMENTO = ?";
 
 	/**
@@ -41,7 +40,7 @@ public class DAOPersona {
 			st.setString(1, p.getNombre1());
 			st.setString(1, p.getNombre2());
 			st.setDate(1, p.getFechaNac());
-			st.setString(1, p.getClave());
+			st.setString(1, p.getPass());
 			st.setInt(1, p.getRol().getId());
 			st.setString(1, p.getEmail());
 			st.setString(1, p.getDocumento());
@@ -54,7 +53,7 @@ public class DAOPersona {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param p
@@ -63,20 +62,20 @@ public class DAOPersona {
 	public static boolean update(Persona p) {
 		try {
 			PreparedStatement st = Conexion.getConnection().prepareStatement(UPDATE_PERSONAS);
-			
+
 			st.setString(1, p.getDocumento());
 			st.setString(1, p.getApellido1());
 			st.setString(1, p.getApellido2());
 			st.setString(1, p.getNombre1());
 			st.setString(1, p.getNombre2());
 			st.setDate(1, p.getFechaNac());
-			st.setString(1, p.getClave());
+			st.setString(1, p.getPass());
 			st.setInt(1, p.getRol().getId());
 			st.setString(1, p.getEmail());
 			st.setInt(1, p.getId());
-			
+
 			int nro = st.executeUpdate();
-			
+
 			return (nro > 0);
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
@@ -134,23 +133,26 @@ public class DAOPersona {
 			st.setString(2, pass);
 			ResultSet resultado = st.executeQuery();
 
-			while (resultado.next()) {
-				p.setId(resultado.getInt("ID_PERSONA"));
-				p.setDocumento(resultado.getString("DOCUMENTO"));
-				p.setNombre1(resultado.getString("NOMBRE1"));
-				p.setNombre2(resultado.getString("NOMBRE2"));
-				p.setApellido1(resultado.getString("APELLIDO1"));
-				p.setApellido2(resultado.getString("APELLIDO2"));
-				p.setEmail(resultado.getString("EMAIL"));
-				p.setFechaNac(resultado.getDate("FECHA_NAC"));
-				Rol rol = new Rol(resultado.getInt("ROL_ID"), resultado.getString("ROL_NOMBRE"),
-						resultado.getString("ROL_DESCRIPCION"));
-				p.setRol(rol);
+			if (!resultado.next()) {				
+				return null;
 			}
 
+			p.setId(resultado.getInt("ID_PERSONA"));
+			p.setDocumento(resultado.getString("DOCUMENTO"));
+			p.setNombre1(resultado.getString("NOMBRE1"));
+			p.setNombre2(resultado.getString("NOMBRE2"));
+			p.setApellido1(resultado.getString("APELLIDO1"));
+			p.setApellido2(resultado.getString("APELLIDO2"));
+			p.setEmail(resultado.getString("EMAIL"));
+			p.setFechaNac(resultado.getDate("FECHA_NAC"));
+			Rol rol = new Rol(resultado.getInt("ROL_ID"), resultado.getString("ROL_NOMBRE"),
+					resultado.getString("ROL_DESCRIPCION"));
+			p.setRol(rol);
+			Auxiliar.avisar(p.toString(), "info");
 			return p;
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			System.err.println(ex.getStackTrace());
+			Auxiliar.avisar(ex.getMessage(), "error");
 			return null;
 		}
 	}
@@ -199,8 +201,8 @@ public class DAOPersona {
 					p.setNombre1(personasRS.getString("NOMBRE1"));
 					p.setNombre2(personasRS.getString("NOMBRE2"));
 					p.setFechaNac(personasRS.getDate("FECHA_NAC"));
-					p.setClave(personasRS.getString("CLAVE"));
-					p.setEmail(personasRS.getString("MAIL"));
+					p.setPass(personasRS.getString("PASS"));
+					p.setEmail(personasRS.getString("EMAIL"));
 
 					Rol r = new Rol();
 					r.setId(personasRS.getInt("ROL_ID"));

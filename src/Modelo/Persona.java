@@ -16,7 +16,7 @@ public class Persona {
     private String nombre1;
     private String nombre2;
     private Date fechaNac;
-    private String clave;
+    private String pass;
     private String email;
     private Rol rol;
     //private String rolDescripcion;
@@ -25,7 +25,7 @@ public class Persona {
     }
 
     public Persona(String documento, String apellido1, String apellido2, String nombre1, String nombre2, Date fechaNac,
-            String clave, String email, Rol rol) {
+            String pass, String email, Rol rol) {
 
         this.documento = documento;
         this.apellido1 = apellido1;
@@ -33,7 +33,7 @@ public class Persona {
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
         this.fechaNac = fechaNac;
-        this.clave = clave;
+        this.pass = pass;
         this.email = email;
         this.rol = rol;
     }
@@ -94,12 +94,12 @@ public class Persona {
         this.fechaNac = fechaNac;
     }
 
-    public String getClave() {
-        return clave;
+    public String getPass() {
+        return pass;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getEmail() {
@@ -120,7 +120,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" + "documento=" + documento + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", nombre1=" + nombre1 + ", nombre2=" + nombre2 + ", fechaNac=" + fechaNac + ", clave=" + clave + ", email=" + email + ", rolNombre=" + rol.getNombre() + ", rolDescripcion=" + rol.getDescripcion() + '}';
+        return "Persona{" + "documento=" + documento + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", nombre1=" + nombre1 + ", nombre2=" + nombre2 + ", fechaNac=" + fechaNac + ", pass=" + pass + ", email=" + email + ", rolNombre=" + rol.getNombre() + ", rolDescripcion=" + rol.getDescripcion() + '}';
     }
 
 }
