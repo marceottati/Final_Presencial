@@ -137,7 +137,7 @@ public class DAOPersona {
 				return null;
 			}
 
-			p.setId(resultado.getInt("ID_PERSONA"));
+			p.setId(resultado.getInt("ID"));
 			p.setDocumento(resultado.getString("DOCUMENTO"));
 			p.setNombre1(resultado.getString("NOMBRE1"));
 			p.setNombre2(resultado.getString("NOMBRE2"));
@@ -148,7 +148,7 @@ public class DAOPersona {
 			Rol rol = new Rol(resultado.getInt("ROL_ID"), resultado.getString("ROL_NOMBRE"),
 					resultado.getString("ROL_DESCRIPCION"));
 			p.setRol(rol);
-			Auxiliar.avisar(p.toString(), "info");
+
 			return p;
 		} catch (Exception ex) {
 			System.err.println(ex.getStackTrace());

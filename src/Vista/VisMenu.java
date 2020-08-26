@@ -33,7 +33,7 @@ public class VisMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		lblBienvenido = new JLabel("\u00A1BIENVENIDO  " + this.persona.getNombre1() + "!");
+		lblBienvenido = new JLabel("\u00A1BIENVENIDO  " + this.persona.getNombre1().toUpperCase() + "!");
 		lblBienvenido.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblBienvenido.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenido.setBounds(10, 44, 684, 31);
